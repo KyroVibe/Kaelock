@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Window::Window(int width, int height) {
+Window::Window(int width, int height, const char* title) {
 
     _width = width;
     _height = height;
@@ -12,7 +12,7 @@ Window::Window(int width, int height) {
         return;
 
     /* Create a windowed mode window and its OpenGL context */
-    _window = glfwCreateWindow(width, height, "Hey Cunt, is it working yet?", NULL, NULL);
+    _window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (!_window) {
         glfwTerminate();
         return;
@@ -21,12 +21,12 @@ Window::Window(int width, int height) {
     /* Make the window's context current */
     glfwMakeContextCurrent(_window);
 
-    // GLenum glewResult = glewInit();
-    // if (glewResult != GLEW_OK) {
-    //     std::cout << glewGetErrorString(glewResult) << std::endl;
-    //     glfwTerminate();
-    //     return;
-    // }
+    GLenum glewResult = glewInit();
+    if (glewResult != GLEW_OK) {
+        std::cout << glewGetErrorString(glewResult) << std::endl;
+        glfwTerminate();
+        return;
+    }
 }
 
 Window::~Window() {

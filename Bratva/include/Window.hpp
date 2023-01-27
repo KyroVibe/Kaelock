@@ -1,7 +1,7 @@
 #ifndef _BRATVA_WINDOW
 #define _BRATVA_WINDOW
 
-// #include "GL/glew.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 class Window {
@@ -9,7 +9,7 @@ private:
     int _width, _height;
     GLFWwindow* _window;
 public:
-    Window(int width, int height);
+    Window(int width, int height, const char* title);
     ~Window();
 
     inline GLFWwindow* get_window() { return _window; }
