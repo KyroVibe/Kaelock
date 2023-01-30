@@ -4,11 +4,13 @@
 
 int main() {
     
-    Window w(400, 400);
+    std::cout << "Pong\n";
 
-    while (w.update()) {
-        std::cout << "Hello\n";        
-    }
+    // Window w(400, 400);
+
+    // while (w.update()) {
+    //     std::cout << "Hello\n";        
+    // }
 
     return 0;
 }
