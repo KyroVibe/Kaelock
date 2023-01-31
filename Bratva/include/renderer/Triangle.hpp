@@ -6,9 +6,11 @@
 
 class Triangle {
 private:
-    ShaderProgram<2, 2> _program;
-    Buffer _vertex_buffer;
-    Buffer _index_buffer;
+    // If I have them stack allocated, they are created, copied and destroyed, destroying the original programs and data and what not.
+    // I could fix this with some ownership hand off but its just easer to heap allocate them for now.
+    ShaderProgram<2, 2>* _program;
+    Buffer* _vertex_buffer;
+    Buffer* _index_buffer;
 public:
     Triangle();
     Triangle(const Triangle& _) = delete;

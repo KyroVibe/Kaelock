@@ -9,9 +9,10 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-
 #include <string>
 #include <vector>
+
+#include "Debug.hpp"
 
 typedef struct { std::string file; GLenum type; } ShaderSource;
 typedef struct { std::string name; unsigned int size; GLenum type; void* offset; } AttributePointer;
@@ -42,7 +43,7 @@ public:
         for (int i = 0; i < num_shaders; ++i) {
             GLuint shaderId = glCreateShader(sources[i].type);
             const char* source = ReadFile(sources[i].file.c_str());
-            std::cout << "Source:\n" << source << "\n\n";
+            // std::cout << "Source:\n" << source << "\n\n";
             glShaderSource(shaderId, 1, &source, NULL);
             glCompileShader(shaderId);
             ShaderErrorCheck(shaderId);
@@ -71,14 +72,17 @@ public:
 
     }
     ~ShaderProgram() {
+        Disable();
         glDeleteProgram(_program);
+
+        LOG("ShaderProgram GC");
     }
 
     void Enable() {
-        glUseProgram(_program);
         for (int i = 0; i < num_pointers; ++i) {
             glEnableVertexAttribArray(_attributes[i]);
         }
+        glUseProgram(_program);
     }
     void Disable() {
         for (int i = 0; i < num_pointers; ++i) {
