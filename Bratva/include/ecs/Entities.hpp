@@ -1,7 +1,7 @@
 #ifndef _BRATVA_ENTITYS
 #define _BRATVA_ENTITYS
 
-typedef int Entity;
+typedef unsigned int Entity;
 
 class EntityManager {
 private:
@@ -9,6 +9,8 @@ private:
 
     EntityManager();
     ~EntityManager();
+
+    Entity* _entityArr;
 
 public:
     static const EntityManager* getInstance() {

@@ -1,9 +1,15 @@
 add_subdirectory(Deps/glfw/)
 add_subdirectory(Deps/glew-2.2.0/build/cmake/)
+
+file(GLOB RendererSources src/renderer/*.hpp)
+
+message(STATUS "Files: ${RendererSources}")
+
 add_library(Bratva
     src/Window.cpp include/Window.hpp
     src/GameInstance.cpp include/GameInstance.hpp
-    src/ecs/Entitys.cpp include/ecs/Entitys.hpp
+    src/ecs/Entities.cpp include/ecs/Entities.hpp
+    src/renderer/Shaders.cpp include/renderer/Shaders.hpp
 )
 
 target_include_directories(Bratva PUBLIC include/)

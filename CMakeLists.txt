@@ -10,6 +10,8 @@ add_executable(Kaelock src/Pong.cpp)
 #target_include_directories(Kaelock PRIVATE Bratva/include/)
 target_link_libraries(Kaelock Bratva)
 
+
+
 if (BUILD_TEST)
     add_executable(Test test/Test.cpp test/BratvaTest.hpp)
     target_link_libraries(Test Bratva)

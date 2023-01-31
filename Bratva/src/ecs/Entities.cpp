@@ -1,9 +1,9 @@
-#include "ecs/Entitys.hpp"
+#include "ecs/Entities.hpp"
 
 #include <stdio.h>
 
 EntityManager::EntityManager() {
-    const EntityManager* em = EntityManager::getInstance();
+    
 }
 
 EntityManager::~EntityManager() {
