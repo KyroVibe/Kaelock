@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project(Kaelock VERSION 1.0.0)
 
-option(BUILD_TEST "Build test executable" OFF)
-
 add_subdirectory(Bratva)
 
 add_executable(Kaelock src/Pong.cpp)
@@ -10,9 +8,10 @@ add_executable(Kaelock src/Pong.cpp)
 #target_include_directories(Kaelock PRIVATE Bratva/include/)
 target_link_libraries(Kaelock Bratva)
 
-
-
-if (BUILD_TEST)
-    add_executable(Test test/Test.cpp test/BratvaTest.hpp)
-    target_link_libraries(Test Bratva)
-endif()
+add_custom_target(Resources
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/Res/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Res ${CMAKE_BINARY_DIR}/Res
+        COMMENT "copying ${CMAKE_SOURCE_DIR}/Res to ${CMAKE_BINARY_DIR}/Res"
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+add_dependencies(Kaelock Resources)

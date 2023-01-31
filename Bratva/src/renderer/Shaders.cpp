@@ -1,5 +1,5 @@
 //
-// Created by hunte on 12/10/2021.
+// Made this a really long time ago and just keep reusing it
 //
 
 #include "renderer/Shaders.hpp"
@@ -51,64 +51,61 @@ const char* ReadFile(const char* path) {
 //    return new ShaderProgram(ReadFile(vert), ReadFile(frag));
 //}
 
-ShaderProgram::ShaderProgram(unsigned int num_shaders, ShaderSource* sources) {
+// template<unsigned int num_shaders, unsigned int num_pointers>
+// ShaderProgram<num_shaders, num_pointers>::ShaderProgram(const ShaderSource* sources, unsigned int element_stride, const AttributePointer* pointers) {
 
-    std::vector<GLuint> shaderIds;
+//     // Shaders
 
-    program = glCreateProgram();
-    // Shaders
-    for (int i = 0; i < num_shaders; ++i) {
-        GLuint shaderId = glCreateShader(sources[i].type);
-        const char* source = ReadFile(sources[i].file.c_str());
-        // std::cout << "Source: \n" << source << std::endl;
-        glShaderSource(shaderId, 1, &source, NULL);
-        glCompileShader(shaderId);
-        ShaderErrorCheck(shaderId);
-        shaderIds.push_back(shaderId);
-    }
-    for (auto iter = shaderIds.begin(); iter != shaderIds.end(); iter++) {
-        glAttachShader(program, *iter);
-    }
+//     GLuint shaderIds[num_shaders];
 
-    glLinkProgram(program);
+//     _program = glCreateProgram();
+//     for (int i = 0; i < num_shaders; ++i) {
+//         GLuint shaderId = glCreateShader(sources[i].type);
+//         const char* source = ReadFile(sources[i].file.c_str());
+//         glShaderSource(shaderId, 1, &source, NULL);
+//         glCompileShader(shaderId);
+//         ShaderErrorCheck(shaderId);
+//         shaderIds[i] = shaderId;
+//         glAttachShader(_program, shaderId); // Is this wrong?
+//     }
 
-    ProgramErrorCheck(program);
+//     glLinkProgram(_program);
+//     ProgramErrorCheck(_program);
 
-    for (auto iter = shaderIds.begin(); iter != shaderIds.end(); iter++) {
-        glDeleteShader(*iter); // I think that's how you iter?
-    }
-}
+//     for (int i = 0; i < num_shaders; ++i) {
+//         glDeleteShader(shaderIds[i]);
+//     }
 
-ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(program);
-}
+//     // Attributes
 
-VertexAttributes::VertexAttributes(size_t stri, std::vector<AttributePointer> ptrs) {
-    pointers = ptrs;
-    stride = stri;
-}
+//     _attributes[num_pointers];
 
-VertexAttributes::~VertexAttributes() { }
+//     for (int i = 0; i < num_pointers; ++i) {
+//         GLuint attrib = glGetAttribLocation(_program, pointers[i].name.c_str());
+//         _attributes[i] = attrib;
+//         glEnableVertexAttribArray(attrib);
+//         glVertexAttribPointer(attrib, pointers[i].size, pointers[i].type, GL_FALSE, element_stride, pointers[i].offset);
+//         glDisableVertexAttribArray(attrib);
+//     }
 
-void VertexAttributes::enable() {
-    for (auto iter = indexes.begin(); iter != indexes.end(); iter++) {
-        glEnableVertexAttribArray(*iter);
-    }
-}
+// }
 
-void VertexAttributes::disable() {
-    for (auto iter = indexes.begin(); iter != indexes.end(); iter++) {
-        glDisableVertexAttribArray(*iter);
-    }
-}
+// template<unsigned int num_shaders, unsigned int num_pointers>
+// ShaderProgram<num_shaders, num_pointers>::~ShaderProgram() {
+//     glDeleteProgram(_program);
+// }
 
-void VertexAttributes::init(ShaderProgram* program) {
-    indexes.clear();
-    for (int i = 0; i < pointers.size(); ++i) {
-        auto attrib = glGetAttribLocation(program->get_program(), pointers.at(i).attribute_name.c_str());
-        indexes.push_back(attrib);
-        glEnableVertexAttribArray(attrib);
-        glVertexAttribPointer(attrib, pointers.at(i).size, pointers.at(i).type, GL_FALSE, stride, pointers.at(i).offset);
-        glDisableVertexAttribArray(attrib);
-    }
-}
+// template<unsigned int num_shaders, unsigned int num_pointers>
+// void ShaderProgram<num_shaders, num_pointers>::Enable() {
+//     glUseProgram(_program);
+//     for (int i = 0; i < _num_pointers; ++i) {
+//         glEnableVertexAttribArray(_attributes[i]);
+//     }
+// }
+
+// template<unsigned int num_shaders, unsigned int num_pointers>
+// void ShaderProgram<num_shaders, num_pointers>::Disable() {
+//     for (int i = 0; i < num_pointers; ++i) {
+//         glDisableVertexAttribArray(_attributes[i]);
+//     }
+// }

@@ -9,6 +9,8 @@ private:
 public:
     GameInstance(float width, float height, const char* title);
     ~GameInstance();
+
+    void run();
 };
 
 #endif

@@ -33,8 +33,12 @@ Window::~Window() {
     glfwTerminate();
 }
 
-bool Window::update() {
+void Window::poll_events() {
     glfwPollEvents();
-
-    return !glfwWindowShouldClose(this->_window);
 }
+
+void Window::swap_buffers() {
+    glfwSwapBuffers(_window);
+}
+
+bool Window::should_close() { return glfwWindowShouldClose(_window); }

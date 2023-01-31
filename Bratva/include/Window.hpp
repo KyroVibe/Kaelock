@@ -16,7 +16,9 @@ public:
     inline int get_width() { return _width; }
     inline int get_height() { return _height; }
 
-    bool update();
+    void poll_events();
+    bool should_close();
+    void swap_buffers();
 };
 
 #endif

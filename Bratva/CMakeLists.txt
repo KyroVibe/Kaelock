@@ -10,6 +10,9 @@ add_library(Bratva
     src/GameInstance.cpp include/GameInstance.hpp
     src/ecs/Entities.cpp include/ecs/Entities.hpp
     src/renderer/Shaders.cpp include/renderer/Shaders.hpp
+    src/renderer/Buffer.cpp include/renderer/Buffer.hpp
+    src/renderer/Triangle.cpp include/renderer/Triangle.hpp
+    src/util/Vec4.cpp include/util/Vec4.hpp
 )
 
 target_include_directories(Bratva PUBLIC include/)
