@@ -13,13 +13,11 @@ GameInstance::~GameInstance() {
 void GameInstance::run() {
     Triangle tri;
 
+    glClear(GL_COLOR_BUFFER_BIT);
+    tri.Draw();
+    _window.swap_buffers();
+
     while (!_window.should_close()) {
-
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        tri.Draw();
-
-        _window.swap_buffers();
         _window.poll_events();
     }
 
