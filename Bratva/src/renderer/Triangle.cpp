@@ -63,12 +63,14 @@ Triangle::~Triangle() {
 }
 
 void Triangle::Draw() {
+    LOG("Enabling Program");
+    _program->Enable();
+
     LOG("Binding Buffers");
     _vertex_buffer->Bind();
     _index_buffer->Bind();
 
-    LOG("Enabling Program");
-    _program->Enable();
+    Debug::WHAT("Bound Buffers");
 
     LOG("Drawing Elements");
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
