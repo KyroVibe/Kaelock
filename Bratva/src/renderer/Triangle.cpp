@@ -27,7 +27,7 @@ const AttributePointer pointers[2] = {
     { "a_color", 4, GL_FLOAT, (void*)(sizeof(float) * 4) }
 };
 
-Triangle::Triangle() {
+Triangle::Triangle(): rotation(0.0f) {
 
     LOG("Red: " << vertex_data[0].color.to_string());
 
@@ -43,6 +43,7 @@ Triangle::Triangle() {
     _vertex_buffer->Bind();
     // LOG("Compiling Shader Program");
     _program = new ShaderProgram<2, 2>(shaders, sizeof(Vertex), pointers);
+    _rotationHandle = _program->getUniformHandle("rotation");
 }
 
 Triangle::~Triangle() {
@@ -54,13 +55,22 @@ Triangle::~Triangle() {
     LOG("Triangle GC");
 }
 
+void Triangle::Update(std::chrono::duration<double> deltaT) {
+    rotation += 3.14 * deltaT.count();
+}
+
 void Triangle::Draw() {
+
+    glEnable(GL_DEPTH_TEST);
+
     // LOG("Binding Buffers");
     _vertex_buffer->Bind();
     _index_buffer->Bind();
 
     // LOG("Enabling Program");
     _program->Enable();
+
+    _program->SetUniform(_rotationHandle, rotation);
 
     // LOG("Drawing Elements");
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);   

@@ -1,13 +1,12 @@
 #include <iostream>
 
 #include "GameInstance.hpp"
+#include "NeuralNetwork.hpp"
 
 int main() {
-    
-    std::cout << "Pong\n";
 
-    GameInstance instance = GameInstance(800, 600, "Pong");
-    instance.run();
+    GameInstance game(600, 600, "Some game");
+    game.run();
 
     return 0;
 }

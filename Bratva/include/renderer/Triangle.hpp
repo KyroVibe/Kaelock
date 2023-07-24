@@ -1,6 +1,8 @@
 #ifndef _BRATVA_RENDERER_TRAINGLE
 #define _BRATVA_RENDERER_TRAINGLE
 
+#include <chrono>
+
 #include "renderer/Shaders.hpp"
 #include "renderer/Buffer.hpp"
 
@@ -11,11 +13,16 @@ private:
     ShaderProgram<2, 2>* _program;
     Buffer* _vertex_buffer;
     Buffer* _index_buffer;
+
+    UniformHandle _rotationHandle;
+
+    float rotation;
 public:
     Triangle();
     Triangle(const Triangle& _) = delete;
     ~Triangle();
 
+    void Update(std::chrono::duration<double> deltaT);
     void Draw();
 };
 

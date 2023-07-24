@@ -2,11 +2,13 @@ cmake_minimum_required(VERSION 3.12)
 project(Kaelock VERSION 1.0.0)
 
 add_subdirectory(Bratva)
+add_subdirectory(Bernard)
 
 add_executable(Kaelock src/Pong.cpp)
 
 #target_include_directories(Kaelock PRIVATE Bratva/include/)
 target_link_libraries(Kaelock Bratva)
+target_link_libraries(Kaelock Bernard)
 
 add_custom_target(Resources
         COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/Res/

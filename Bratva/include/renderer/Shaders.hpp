@@ -21,6 +21,8 @@ void ShaderErrorCheck(GLuint shader);
 void ProgramErrorCheck(GLuint program);
 const char* ReadFile(const char* path);
 
+typedef GLint UniformHandle;
+
 template<unsigned int num_shaders, unsigned int num_pointers>
 class ShaderProgram {
 private:
@@ -78,6 +80,10 @@ public:
         LOG("ShaderProgram GC");
     }
 
+    UniformHandle getUniformHandle(std::string name) {
+        return glGetUniformLocation(_program, name.c_str());
+    }
+
     void Enable() {
         for (int i = 0; i < num_pointers; ++i) {
             glEnableVertexAttribArray(_attributes[i]);
@@ -88,6 +94,14 @@ public:
         for (int i = 0; i < num_pointers; ++i) {
             glDisableVertexAttribArray(_attributes[i]);
         }
+    }
+
+    void SetUniform(UniformHandle handle, float value) {
+        glUniform1f(handle, value);
+    }
+
+    void SetUniform(UniformHandle handle, float valueA, float valueB) {
+        glUniform2f(handle, valueA, valueB);
     }
 
     // inline GLuint get_program() { return _program; }
