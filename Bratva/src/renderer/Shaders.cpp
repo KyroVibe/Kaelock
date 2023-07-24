@@ -8,8 +8,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cstdio>
 
-void ShaderErrorCheck(GLuint shader) {
+void ShaderErrorCheck(GLuint shader, const char* sourcePath) {
     GLint vertex_compiled;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &vertex_compiled);
     if (vertex_compiled != GL_TRUE) {
@@ -17,7 +18,7 @@ void ShaderErrorCheck(GLuint shader) {
         GLchar message[1024];
         glGetShaderInfoLog(shader, 1024, &log_length, message);
         // Write the error to a log
-        std::cout << "Error: \n" << message << std::endl;
+        printf("Error in '%s' Shader:\n%s\n", sourcePath, message);
     }
 }
 
@@ -28,7 +29,7 @@ void ProgramErrorCheck(GLuint program) {
         GLsizei log_length = 0;
         GLchar message[1024];
         glGetProgramInfoLog(program, 1024, &log_length, message);
-        std::cout << "Error: \n" << message << std::endl;
+        std::cout << "Error in GPU Program:\n" << message << std::endl;
     }
 }
 

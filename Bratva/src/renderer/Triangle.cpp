@@ -23,26 +23,34 @@ const ShaderSource shaders[2] = {
 };
 
 const AttributePointer pointers[2] = {
-    { "a_position", 4, GL_FLOAT, 0 },
-    { "a_color", 4, GL_FLOAT, (void*)(sizeof(float) * 4) }
+    { 0, 4, GL_FLOAT, 0 },
+    { 1, 4, GL_FLOAT, (void*)(sizeof(float) * 4) }
 };
 
 Triangle::Triangle() {
 
     LOG("Red: " << vertex_data[0].color.to_string());
 
+    Debug::WHAT("Triangle Start");
+
     // LOG("Creating Vertex Buffer");
-    _vertex_buffer = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+    _vertex_buffer = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW, true);
     // LOG("Loading Vertex Buffer");
     _vertex_buffer->LoadBuffer(sizeof(Vertex) * 3, vertex_data);
+
+    Debug::WHAT("Post Vertex Buffer");
+
     // LOG("Creating Index Buffer");
-    _index_buffer = new Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
+    _index_buffer = new Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW, false);
     // LOG("Loading Index Buffer");
     _index_buffer->LoadBuffer(sizeof(unsigned int) * 3, index_data);
+
+    Debug::WHAT("Post Index Buffer");
 
     _vertex_buffer->Bind();
     // LOG("Compiling Shader Program");
     _program = new ShaderProgram<2, 2>(shaders, sizeof(Vertex), pointers);
+    _vertex_buffer->Unbind();
 }
 
 Triangle::~Triangle() {
@@ -55,16 +63,18 @@ Triangle::~Triangle() {
 }
 
 void Triangle::Draw() {
-    // LOG("Binding Buffers");
+    LOG("Binding Buffers");
     _vertex_buffer->Bind();
     _index_buffer->Bind();
 
-    // LOG("Enabling Program");
+    LOG("Enabling Program");
     _program->Enable();
 
-    // LOG("Drawing Elements");
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);   
+    LOG("Drawing Elements");
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
-    // LOG("Disabling Program");
+    Debug::WHAT("Drawn Elements");
+
+    LOG("Disabling Program");
     _program->Disable();
 }

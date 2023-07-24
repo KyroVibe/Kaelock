@@ -19,6 +19,7 @@ public:
     void poll_events();
     bool should_close();
     void swap_buffers();
+    inline bool has_glfw_window() { return _window != nullptr; }
 };
 
 #endif

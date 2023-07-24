@@ -1,11 +1,11 @@
-#version 150
+#version 410
 
-attribute vec4 a_position;
-attribute vec4 a_color;
+layout(location = 0) in vec4 a_Position;
+layout(location = 1) in vec4 a_Color;
 
-out vec4 color;
+out vec4 v_Color;
 
 void main() {
-    color = a_color;
-    gl_Position = a_position;
+    v_Color = a_Color;
+    gl_Position = a_Position;
 }
