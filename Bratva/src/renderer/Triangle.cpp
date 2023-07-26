@@ -17,12 +17,12 @@ unsigned int index_data[3] = {
     0, 1, 2
 };
 
-const ShaderSource shaders[2] = {
+const Bratva::Render::ShaderSource shaders[2] = {
     { "Res/Shaders/triangle_vs.glsl", GL_VERTEX_SHADER },
     { "Res/Shaders/triangle_fs.glsl", GL_FRAGMENT_SHADER }
 };
 
-const AttributePointer pointers[2] = {
+const Bratva::Render::AttributePointer pointers[2] = {
     { 0, 4, GL_FLOAT, 0 },
     { 1, 4, GL_FLOAT, (void*)(sizeof(float) * 4) }
 };
@@ -42,14 +42,16 @@ Triangle::Triangle() {
 
     // LOG("Creating Index Buffer");
     _index_buffer = new Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW, false);
-    // LOG("Loading Index Buffer");
+    // LOG("Loading Index Buffer");P
     _index_buffer->LoadBuffer(sizeof(unsigned int) * 3, index_data);
 
     Debug::WHAT("Post Index Buffer");
 
     _vertex_buffer->Bind();
     // LOG("Compiling Shader Program");
-    _program = new ShaderProgram<2, 2>(shaders, sizeof(Vertex), pointers);
+    _program = new Bratva::Render::ShaderProgram(
+        std::vector<Bratva::Render::ShaderSource>(shaders, shaders + 2), sizeof(Vertex), std::vector<Bratva::Render::AttributePointer>(pointers, pointers + 2)
+    );
     _vertex_buffer->Unbind();
 }
 
