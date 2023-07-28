@@ -3,24 +3,28 @@
 
 #include <GL/glew.h>
 
-class Buffer {
-private:
-    GLuint _buffer;
-    GLenum _usage;
-    GLenum _target;
-    bool _isVertexArray;
-public:
+namespace Bratva::Render {
 
-    Buffer() = default;
-    Buffer(const Buffer& _) = delete;
-    Buffer(GLenum target, GLenum usage, bool isVertexArray);
-    ~Buffer();
+    class Buffer {
+    private:
+        GLuint _buffer;
+        GLenum _usage;
+        GLenum _target;
+        bool _isVertexArray;
+    public:
 
-    void LoadBuffer(size_t size, const void* data);
+        Buffer() = default;
+        Buffer(const Buffer& _) = delete;
+        Buffer(GLenum target, GLenum usage, bool isVertexArray);
+        ~Buffer();
 
-    void Bind();
-    void Unbind();
+        void LoadBuffer(size_t size, const void* data);
 
-};
+        void Bind();
+        void Unbind();
+
+    };
+
+}
 
 #endif

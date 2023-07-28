@@ -27,17 +27,12 @@ namespace Bratva {
         class ShaderProgram {
         private:
             GLuint  _program;
-            GLuint  _vao;
-            GLuint* _attributes;
-            size_t  _attribute_count;
         public:
             
             ShaderProgram(const ShaderProgram& _) = delete;
 
             ShaderProgram(
-                std::vector<ShaderSource> sources,
-                unsigned int element_stride,
-                std::vector<AttributePointer> pointers
+                std::vector<ShaderSource> sources
             );
             ~ShaderProgram();
 

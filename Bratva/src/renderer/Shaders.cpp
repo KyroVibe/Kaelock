@@ -12,11 +12,7 @@
 
 namespace Bratva::Render {
 
-    ShaderProgram::ShaderProgram(
-        std::vector<ShaderSource> sources,
-        unsigned int element_stride,
-        std::vector<AttributePointer> pointers
-        ) {
+    ShaderProgram::ShaderProgram(std::vector<ShaderSource> sources) {
 
         GLuint* shaderIds = new GLuint[sources.size()];
 
@@ -42,45 +38,22 @@ namespace Bratva::Render {
 
         Debug::WHAT(std::string("Post Shader Compilation and Linking"));
 
-        // Attributes
-
-        glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
-
-        _attributes = new GLuint[pointers.size()];
-        _attribute_count = pointers.size();
-
-        for (int i = 0; i < pointers.size(); ++i) {
-            GLuint attrib = pointers[i].location;
-            _attributes[i] = attrib;
-            glEnableVertexAttribArray(attrib);
-            glVertexAttribPointer(attrib, pointers[i].size, pointers[i].type, GL_FALSE, element_stride, pointers[i].offset);
-            // glDisableVertexAttribArray(attrib);
-
-            Debug::WHAT(std::to_string(attrib));
-        }
-
-        glBindVertexArray(0);
-
     }
 
     ShaderProgram::~ShaderProgram() {
         Disable();
         glDeleteProgram(_program);
 
-        delete[] _attributes;
-
         LOG("ShaderProgram GC");
     }
 
     void ShaderProgram::Enable() {
         glUseProgram(_program);
-        glBindVertexArray(_vao);
         Debug::WHAT("Enabling Shader");
     }
 
     void ShaderProgram::Disable() {
-        glBindVertexArray(0);
+        glUseProgram(0);
         Debug::WHAT("Disabling Shader");
     }
 

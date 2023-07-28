@@ -34,25 +34,19 @@ Triangle::Triangle() {
     Debug::WHAT("Triangle Start");
 
     // LOG("Creating Vertex Buffer");
-    _vertex_buffer = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW, true);
-    // LOG("Loading Vertex Buffer");
-    _vertex_buffer->LoadBuffer(sizeof(Vertex) * 3, vertex_data);
+    _vertex_buffer = new Bratva::Render::VertexBuffer(sizeof(Vertex) * 3, vertex_data);
 
     Debug::WHAT("Post Vertex Buffer");
 
     // LOG("Creating Index Buffer");
-    _index_buffer = new Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW, false);
-    // LOG("Loading Index Buffer");P
-    _index_buffer->LoadBuffer(sizeof(unsigned int) * 3, index_data);
+    _index_buffer = new Bratva::Render::IndexBuffer(index_data, 3);
 
     Debug::WHAT("Post Index Buffer");
 
-    _vertex_buffer->Bind();
     // LOG("Compiling Shader Program");
     _program = new Bratva::Render::ShaderProgram(
-        std::vector<Bratva::Render::ShaderSource>(shaders, shaders + 2), sizeof(Vertex), std::vector<Bratva::Render::AttributePointer>(pointers, pointers + 2)
+        std::vector<Bratva::Render::ShaderSource>(shaders, shaders + 2)
     );
-    _vertex_buffer->Unbind();
 }
 
 Triangle::~Triangle() {
@@ -65,6 +59,9 @@ Triangle::~Triangle() {
 }
 
 void Triangle::Draw() {
+
+    // _vertex_buffer->Bind();
+
     LOG("Enabling Program");
     _program->Enable();
 

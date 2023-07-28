@@ -13,7 +13,9 @@ add_library(Bratva
     src/renderer/Buffer.cpp include/renderer/Buffer.hpp
     src/renderer/Triangle.cpp include/renderer/Triangle.hpp
     src/util/Vec4.cpp include/util/Vec4.hpp
-    include/Debug.hpp
+    
+    src/renderer/VertexBuffer.cpp
+    src/renderer/IndexBuffer.cpp
 )
 
 target_include_directories(Bratva PUBLIC include/)
